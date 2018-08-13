@@ -1,3 +1,4 @@
+
 class Node
 {
  private:
@@ -20,4 +21,3 @@ class Stack
  int top();
  bool isEmpty();
 };
-

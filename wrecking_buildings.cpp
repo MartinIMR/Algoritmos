@@ -1,7 +1,9 @@
 #include <iostream>
-#include "stack.hpp"
+#include "stack.cpp"
 
 using namespace std;
+
+void reckoningMaximum(int [],int);
 
 int main()
 {
@@ -24,26 +26,44 @@ int main()
   cin >> area;
   rectangleAreas[i] = area;
  }
- Stack * stack = new Stack();
- if((*stack).isEmpty())
- {
-  cout << "The stack is empty" <<endl;
- }else{
-  cout << "The stack is not empty" <<endl;
- }
- cout << "Put a value for the stack"<<endl; 
- int value;
- cin >> value;
- cout << "Pushing the value "<<endl;
- (*stack).push(value);
- if((*stack).isEmpty())
- {
-  cout << "The stack is empty" <<endl;
- }else{
-  cout << "The stack is not empty" <<endl;
- }
- cout << "The top has:"<< (*stack).top()<<endl;
- 
+ reckoningMaximum(rectangleAreas,solicitedAreas);
  return 0;
 }
 
+void reckoningMaximum(int areas[],int n)
+{
+ Stack * stack = new Stack();
+ int maxima = 0;
+ for(int i=0;i<n+1;i++)
+ {
+    if(areas[i]<areas[i+1])
+    {
+	cout << "Area en "<< i+1 <<" es mayor que la en "<<i<<endl;
+	(*stack).push(i+1);
+    }else if(areas[i]>areas[i+1])
+    {
+	cout << "Area en "<< i+1 <<" es menor que la en "<<i<<endl;
+	int top;
+	do{
+	   top = (*stack).pop();
+	   cout << "Tope tiene "<<top<<endl;
+	   int base = (i+1) - top;
+	   int height = areas[top];
+	   int area = base * height;
+	   cout << "Base y altura son "<<base<<" "<<height<<" area es "<<area<<endl;
+	   if(maxima < area)
+	   {
+	     maxima = area;
+	   }
+	}while(areas[top]>areas[i+1]);
+
+	if((*stack).isEmpty())
+	{
+	  cout << "Pila vacia llenando con ultimo tope "<<top<<endl;
+	  (*stack).push(top);
+	}
+    }
+ }
+ cout << "Maximum area is:"<<maxima<<endl;
+
+}
