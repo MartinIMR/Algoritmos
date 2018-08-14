@@ -1,5 +1,5 @@
 #include <iostream>
-#include "stack.cpp"
+#include "stack.hpp"
 
 using namespace std;
 
@@ -34,6 +34,7 @@ void reckoningMaximum(int areas[],int n)
 {
  Stack * stack = new Stack();
  int maxima = 0;
+ int top;
  for(int i=0;i<n+1;i++)
  {
     if(areas[i]<areas[i+1])
@@ -42,10 +43,11 @@ void reckoningMaximum(int areas[],int n)
 	(*stack).push(i+1);
     }else if(areas[i]>areas[i+1])
     {
+	int fallen = area[i+1];
 	cout << "Area en "<< i+1 <<" es menor que la en "<<i<<endl;
-	int top;
-	do{
-	   top = (*stack).pop();
+	top = (*stack).pop();
+	while( areas[top] > fallen )
+	{
 	   cout << "Tope tiene "<<top<<endl;
 	   int base = (i+1) - top;
 	   int height = areas[top];
@@ -54,15 +56,19 @@ void reckoningMaximum(int areas[],int n)
 	   if(maxima < area)
 	   {
 	     maxima = area;
-	   }
-	}while(areas[top]>areas[i+1]);
-
-	if((*stack).isEmpty())
-	{
-	  cout << "Pila vacia llenando con ultimo tope "<<top<<endl;
-	  (*stack).push(top);
+	   }else if((*stack).isEmpty())
+	   {
+	  	cout << "Pila vacia llenando con ultimo tope "<<top<<endl;
+	  	(*stack).push(top);
+	   } 
 	}
+	if(fallen < areas[top])
+	{
+	   (*stack).push(i+1);
+	}
+	    
     }
+	 
  }
  cout << "Maximum area is:"<<maxima<<endl;
 
