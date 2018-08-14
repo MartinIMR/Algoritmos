@@ -5,6 +5,7 @@ class Node
  int data;
  Node *previous;
  public:
+ Node();
  int getData();
  Node * getPrevious();
  void setNode(int,Node *);
