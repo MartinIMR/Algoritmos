@@ -1,48 +1,36 @@
 #include <iostream>
+#include "stack.hpp"
 
-class Node
-{
- private:
- int data;
- Node *previous;
- public:
- Node()
+ Node :: Node()
  {
   data = 0;
   previous = nullptr;
  }
- int getData()
+ int Node :: getData()
  {
   return data;
  }
- Node * getPrevious()
+ Node* Node :: getPrevious()
  {
   return previous;
  }
- void setNode(int d,Node * node)
+ void Node :: setNode(int d,Node * node)
  {
    data = d;
    previous = node;
  }
 
-};
-
-class Stack
-{
- private:
- Node * upper;
- public:
- Stack()
+ Stack :: Stack()
  {
   upper = nullptr;
  }
- void push(int data)
+ void Stack :: push(int data)
  {
    Node * node = new Node;
    (*node).setNode(data,upper);
    upper = node;
  }
- int pop()
+ int Stack :: pop()
  {
   int data = (*upper).getData();
   Node * previous = (*upper).getPrevious();
@@ -50,11 +38,11 @@ class Stack
   upper = previous;
   return data;
  }
- int top()
+ int Stack :: top()
  {
   return (*upper).getData();
  }
- bool isEmpty()
+ bool Stack :: isEmpty()
  {
    if(upper == nullptr)
    {
@@ -64,5 +52,4 @@ class Stack
    }
  }
 
-};
 
